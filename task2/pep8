@@ -1,0 +1,66 @@
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
+# !/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+BANNER_PRICE = 5500
+PRINT_PAY = 1250
+
+
+# определяем количестов баннеров
+def set_quantity():
+    print('Сколько рекламных щитов требует ваша рекламная компания?')
+    quantity = int(input())
+    return quantity
+
+
+# определяем необходимость печати баннеров
+def set_printing():
+    print('Вы ходите, чтобы мы напечатали ваши рекламные банеры?')
+    printing = input('Напишите "да" или "нет"\n').lower()
+    while printing not in [False, True]:
+        if printing == 'да':
+            printing = True
+        elif printing == 'нет':
+            printing = False
+            print(printing)
+        else:
+            print('Проверьте праильность написания ответа. '
+                  'Ответ должен быть либо "да", либо "нет"')
+            printing = input('Напишите "да" или "нет"\n').lower()
+    return printing
+
+
+# определяем размер скидки через условие по количеству баннеров
+def set_discount(quantity):
+    discount = 1
+    if quantity < 20:
+        discount = 1
+    elif 20 <= quantity < 50:
+        discount = 0.95
+    elif 50 <= quantity < 100:
+        discount = 0.9
+    elif 100 <= quantity:
+        discount = 0.85
+    return discount
+
+
+# определяем полную цену с учётом количества, скидки и возможной печати
+def set_prise(quantity, printing, discount):
+    if printing is False:
+        price = (BANNER_PRICE * quantity) * discount
+        print(f'Полная стоимость составляет:'
+              f' {price} рублей')
+    else:
+        price = (BANNER_PRICE * quantity) + (PRINT_PAY * quantity) * discount
+        print(f'Полная стоимость составляет:'
+              f' {price} рублей')
+    return price
+
+
+if __name__ == '__main__':
+    quantity = set_quantity()
+    printing = set_printing()
+    discount = set_discount(quantity)
+    price = set_prise(quantity, printing, discount)
